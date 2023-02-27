@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+  <title>属性定制</title>
+  <link rel="stylesheet" href="dist/bootstrap.min.css">
+  <link rel='stylesheet' href='dist/font/foundation.min.css'>
+  <link rel='stylesheet' href='dist/font/font-awesome.css'>
+  <style>
+    .btn:focus,
+    .btn:active:focus,
+    .btn.active:focus {
+      outline: thin dotted;
+      outline: 0;
+      outline-offset: 0;
+    }
+
+    #descript_cpv {
+      font-size: 13px;
+      color: deeppink;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="url"],
+    textarea,
+    input[type="file"],
+    input[type="checkbox"],
+    input[type="radio"],
+    select {
+      margin: 0;
+    }
+
+    .help-block {
+      font-size: .1rem;
+    }
+
+    h1 {
+      font-size: 2.05rem
+    }
+
+    h2 {
+      font-size: 1.3125rem
+    }
+
+    h3 {
+      font-size: 1.0875rem
+    }
+
+    h3>span,tip {
+      color: #0a0a0a;
+      text-shadow: 5px 5px 2px #abababd9, 0 0 1px #a1a1a133, 0 0 3px #a9a9a95c, 0 0 1px #b3b3b375;
+    }
+
+    .form-control {
+      word-break: break-all;
+    }
+
+    h4 {
+      font-size: .8375rem
+    }
+    tip{
+      color:#9c27b0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="modal fade" id="jsonModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h5 class="modal-title">数据</h5>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <h6>点击复制按钮 如果复制不成功请手动全选复制!</h6>
+          <textarea rows="6" class="form-control" aria-label="With textarea" name="jsonvalue"></textarea>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <p class="text-primary">建议将此数据保存,下次点击"导入数据"粘贴此数据,就可以继续在此基础上继续编辑哦!</p>
+          <span id="tipsjsonmodal2" class="text-success"></span>
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="copyJsonVAlue()">复制</button>
+          <button type="button" class="btn btn-primary"
+            onclick="javascript:downLoad(window.json_val,editor.getEditor('root').getTitle()+'.txt')">下载</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="customizationData">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h5 class="modal-title">导入数据</h5>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <textarea rows="6" class="form-control" aria-label="With textarea" name="customizationData"></textarea>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <input type="file" class="btn btn-default" style="display: inline-block;width: 50%;">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="copyCustomizationValue()">导入</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='row'>
+    <div class='medium-12 columns'>
+      <h2>属性定制</h2>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='medium-6 columns'>
+      <ul>
+        <li style="color: crimson;" id="tips-uspass">进来第一件事填写账号密码，选存档位置。单档切记选存档位置否则默认修改第一页第一个档。</li>
+        <li>账号为国外或香港手机号需添加区号 格式:区号+空格+手机号。<br>如香港:+852 22252225</li>
+        <li>
+          可以将生成的数据保存备份，下次可以直接<button class="btn btn-default"><i class="fa fa-copy"></i> 导入数据</button>继续编辑
+        </li>
+      </ul>
+    </div>
+    <div class='medium-6 columns'>
+      <ul>
+        <li>如果不想修改某个属性值请点击<button class="btn btn-default"><i class="fa fa-pencil"></i> 列表</button>
+          把属性前的勾勾去掉(<a class="text-danger">操作完后记得再次点击<button class="btn btn-default"><i class="fa fa-pencil"></i>
+              列表</button>关闭弹出框,否则页面无法编辑哦.另外每次切换 属性会排到底部,不是原先的位置.</a>)</li>
+        <li>点击<button type="button" title="Collapse" class="btn btn-default json-editor-btn-collapse "><i
+              class="fa fa-caret-square-o-down"></i> </button>
+          按钮可以展开收缩列表
+        </li>
+        <li>
+          使用“数据模板”或<button class="btn btn-default"><i class="fa fa-copy"></i> 导入数据</button>可快速预设属性值。
+        </li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  <div class="jumbotron" style="padding: 10px 0;margin: 0 0 5px;">
+    <div class="row">
+      <div class='medium-6 columns'>
+        <h6 for="default-select">数据模板</h6>
+        <select id="default-select" name="theme" class="form-control browser-default">
+        </select>
+      </div>
+      <div class='medium-6 columns'>
+        <h6>说明:</h6>
+        <p id="descript_cpv"></p>
+        <span id="descript_cpv_tips" class="label success"></span> <button type="button" class="btn btn-primary"
+          onclick="copyDefaultValue()">应用</button>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='medium-12 columns'>
+      <button id='submit' class='btn btn-primary'>生成数据</button>
+      <span id='valid_indicator' class='label'></span>
+      <span id='tips_lable' class='label'></span>
+      <button type="button" onclick="javascript:$('#customizationData textarea').val('')" data-toggle="modal"
+        data-target="#customizationData" class="btn btn-default"><i class="fa fa-copy"></i> 导入数据</button>
+    </div>
+  </div>
+  <div class='row'>
+    <div id='editor_holder' class='medium-12 columns'></div>
+  </div>
+<script src="dist/jquery-1.11.0.min.js"></script>
+<script src="dist/bootstrap.min.js"></script>
+<script src="dist/emj.js"></script> 
+</body>
+
+</html>
